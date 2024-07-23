@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Country } from "../App";
 
-const CountryCard = ({ country }) => {
+const CountryCard = ({ country }: { country: Country }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -44,7 +45,7 @@ const CountryCard = ({ country }) => {
         </p>
       </div>
       <Link
-        to={`/country/${country.name.common.replaceAll(" ", "")}`}
+        to={`/country/${country.name.common}`}
         className=" block mr-2 mb-2 py-1 px-2 w-fit ml-auto border border-slate-[#ccc] dark:border-[#5555555d] rounded-md shadow cursor-pointer duration-300 ease-in-out hover:bg-slate-200 dark:hover:bg-dark-blue-600 active:scale-95  md:active:scale-50"
         title={`View more details about ${country.name.common}`}
         aria-label={`View more details about ${country.name.common}`}
