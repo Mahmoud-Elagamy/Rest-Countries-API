@@ -7,7 +7,7 @@ const CountryCard = ({ country }: { country: Country }) => {
 
   return (
     <article
-      className={`country-card bg-white dark:bg-dark-blue-500 shadow-light-box-shadow dark:shadow-dark-box-shadow rounded-md transition-[background-color,box-shadow,transform] duration-300 ease-in-out ${
+      className={`country-card flex flex-col justify-between bg-white dark:bg-dark-blue-500 shadow-light-box-shadow dark:shadow-dark-box-shadow rounded-md transition-[background-color,box-shadow,transform] duration-300 ease-in-out ${
         isHovered && "-translate-y-2"
       }`}
     >
