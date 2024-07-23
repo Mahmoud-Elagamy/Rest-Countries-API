@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-color: #ccc;
+}
+
+:root.dark {
+  --bg-color: #3399ff;
+}
+
+@layer components {
+  .flex-center-between {
+    @apply flex items-center justify-between flex-wrap;
+  }
+}
+
+.pagination button.active,
+.pagination button:not(:disabled):hover {
+  background-color: var(--bg-color);
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
