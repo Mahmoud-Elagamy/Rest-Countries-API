@@ -20,7 +20,7 @@ const Header = ({ isDarkMode, setIsDarkMode }: HeaderProps) => {
       <div className="container flex-center-between">
         <h1 className="md:text-2xl font-extrabold">Where in the world?</h1>
         <button
-          className="flex items-center gap-1 font-semibold group/item px-1"
+          className="flex items-center gap-1 font-semibold group/item p-2 rounded-md shadow-sm transition-[background-color] duration-300 ease-in-out bg-slate-200 dark:bg-dark-blue-600"
           type="button"
           title="Toggle Theme"
           aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
@@ -28,16 +28,15 @@ const Header = ({ isDarkMode, setIsDarkMode }: HeaderProps) => {
         >
           {isDarkMode ? (
             <Sun
-              size={18}
-              className=" duration-300 ease-in-out group-hover/item:rotate-[360deg]"
+              size={20}
+              className=" duration-300 ease-in-out group-hover/item:rotate-[360deg] "
             />
           ) : (
             <Moon
-              size={18}
+              size={20}
               className=" duration-300 ease-in-out group-hover/item:rotate-[360deg]"
             />
           )}
-          {isDarkMode ? "Light" : "Dark"} Mode
         </button>
       </div>
     </header>
