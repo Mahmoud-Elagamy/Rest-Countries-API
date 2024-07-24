@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Lucide Library
 import { SearchSlash } from "lucide-react";
@@ -16,6 +16,7 @@ import { Country } from "../App";
 type CountriesList = {
   isDarkMode: boolean;
   filteredCountries: Country[];
+  currentRegion: string;
   isLoading: boolean;
   searchQuery: string;
 };
@@ -23,6 +24,7 @@ type CountriesList = {
 const CountriesList = ({
   isDarkMode,
   filteredCountries,
+  currentRegion,
   isLoading,
   searchQuery,
 }: CountriesList) => {
@@ -56,6 +58,10 @@ const CountriesList = ({
 
   const countriesToDisplay = searchQuery ? filteredCountries : slicedCountries;
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [currentRegion]);
+
   if (isLoading) {
     return (
       <div className="container grid gap-5 grid-cols-large-devices md:gap-[77px]">
@@ -72,7 +78,7 @@ const CountriesList = ({
   return (
     <>
       <main>
-        <section className="countries-list text-sm container pb-6 grid gap-12 grid-cols-sm-devices place-content-center md:gap-[77px] md:grid-cols-large-devices">
+        <section className="countries-list text-sm container grid gap-12 grid-cols-sm-devices place-content-center md:gap-[77px] md:grid-cols-large-devices">
           <h2 className="sr-only">Countries</h2>
           {filteredCountries?.length ? (
             countriesToDisplay.map((country, index) => (
@@ -91,7 +97,7 @@ const CountriesList = ({
           )}
         </section>
       </main>
-      <footer className="pb-3">
+      <footer className="pb-3 pt-12 md:pt-[77px]">
         {totalPages > 1 && (
           <Pagination
             currentPage={currentPage}
