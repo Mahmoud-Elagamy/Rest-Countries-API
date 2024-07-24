@@ -1,4 +1,5 @@
 //Todo: Multiple select.
+//! Don't forget to fix the pagination problem.
 
 import { useState, useLayoutEffect, useEffect, useMemo } from "react";
 
@@ -64,8 +65,15 @@ const App = () => {
       const response = await fetch(
         "https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital"
       );
+
       const data = await response.json();
-      setCountries(data);
+
+      const theWantedCountries = data.filter(
+        (country: Country) => country.name.common !== "Israel"
+      );
+
+      setCountries(theWantedCountries);
+
       setIsLoading(false);
     };
 
@@ -102,6 +110,7 @@ const App = () => {
       <CountriesList
         isDarkMode={isDarkMode}
         filteredCountries={filteredCountries}
+        currentRegion={currentRegion}
         isLoading={isLoading}
         searchQuery={searchQuery}
       />
