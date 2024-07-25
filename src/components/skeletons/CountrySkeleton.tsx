@@ -1,7 +1,7 @@
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-type CountrySkeletonProps = {
+export type CountrySkeletonProps = {
   isDarkMode: boolean;
 };
 
@@ -20,7 +20,7 @@ const CountrySkeleton = ({ isDarkMode }: CountrySkeletonProps) => {
       }}
     >
       <Skeleton
-        className="block mx-auto w-full"
+        className="mx-auto block w-full"
         height={160}
         baseColor={baseColor}
         highlightColor={highlightColor}

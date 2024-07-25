@@ -1,6 +1,4 @@
-//Todo: Multiple select.
-//! Don't forget to fix the pagination problem.
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState, useLayoutEffect, useEffect, useMemo } from "react";
 
 // Custom Components
@@ -8,6 +6,8 @@ import Header from "./components/Header";
 import SearchCountries from "./components/SearchCountries";
 import FilterCountries from "./components/FilterCountries";
 import CountriesList from "./components/CountriesList";
+import CountryDetails from "./components/CountryDetails";
+import ErrorPage from "./components/ErrorPage";
 
 // Utils
 import applyTheme from "./utils/applyTheme";
@@ -17,13 +17,36 @@ import debounce from "./utils/debounce";
 export type Country = {
   name: {
     common: string;
+    official?: string;
   };
+
   flags: {
     png: string;
   };
+
   population: number;
   region: string;
   capital?: string;
+  subregion?: string;
+
+  maps?: {
+    googleMaps: string;
+    openStreetMaps: string;
+  };
+
+  currencies?: {
+    [key: string]: {
+      name: string;
+      symbol: string;
+    };
+  };
+
+  languages?: {
+    [key: string]: string;
+  };
+
+  borders?: [];
+  cca3?: string;
 };
 
 const App = () => {
@@ -43,7 +66,7 @@ const App = () => {
 
     if (searchQuery) {
       filtered = filtered.filter((country) =>
-        country.name.common.toLowerCase().includes(searchQuery.toLowerCase())
+        country.name.common.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
 
@@ -63,13 +86,13 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        "https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital"
+        "https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital",
       );
 
       const data = await response.json();
 
       const theWantedCountries = data.filter(
-        (country: Country) => country.name.common !== "Israel"
+        (country: Country) => country.name.common !== "Israel",
       );
 
       setCountries(theWantedCountries);
@@ -96,24 +119,45 @@ const App = () => {
   }, [currentRegion, searchQuery, debouncedFilter]);
 
   return (
-    <div className="app min-h-screen transition-[background-color] duration-300 ease-in-out text-dark-blue-700  dark:text-white bg-dark-gray-600 dark:bg-dark-blue-600">
-      <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+    <div className="app min-h-screen bg-dark-gray-600 text-dark-blue-700 transition-[background-color] duration-300 ease-in-out dark:bg-dark-blue-600 dark:text-white">
+      <Router>
+        <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <div className="flex-center-between container mb-10">
+                  <SearchCountries
+                    setSearchQuery={setSearchQuery}
+                    searchQuery={searchQuery}
+                  />
+                  <FilterCountries
+                    currentRegion={currentRegion}
+                    setCurrentRegion={setCurrentRegion}
+                    handleFilterChange={handleFilterChange}
+                  />
+                </div>
 
-      <div className="container flex-center-between mb-6">
-        <SearchCountries setSearchQuery={setSearchQuery} />
-        <FilterCountries
-          currentRegion={currentRegion}
-          handleFilterChange={handleFilterChange}
-          setCurrentRegion={setCurrentRegion}
-        />
-      </div>
-      <CountriesList
-        isDarkMode={isDarkMode}
-        filteredCountries={filteredCountries}
-        currentRegion={currentRegion}
-        isLoading={isLoading}
-        searchQuery={searchQuery}
-      />
+                <CountriesList
+                  isDarkMode={isDarkMode}
+                  filteredCountries={filteredCountries}
+                  currentRegion={currentRegion}
+                  isLoading={isLoading}
+                  searchQuery={searchQuery}
+                />
+              </>
+            }
+          ></Route>
+          <Route
+            path="/country/:countryName"
+            element={
+              <CountryDetails isLoading={isLoading} isDarkMode={isDarkMode} />
+            }
+          />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </Router>
     </div>
   );
 };
