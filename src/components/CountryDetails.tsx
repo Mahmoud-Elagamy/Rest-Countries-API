@@ -7,6 +7,9 @@ import { ArrowBigLeft, MapPin } from "lucide-react";
 // Custom Components
 import CountryDetailsSkeleton from "./skeletons/CountryDetailsSkeleton";
 
+// Utils
+import debounce from "../utils/debounce";
+
 // Types
 import { Country, MotionType } from "../App";
 type CountryDetailsProps = {
@@ -51,7 +54,7 @@ function CountryDetails({
   const countryBorders = useMemo(() => {
     return borderCountries.map((country: Country) => (
       <Link
-        to={`/country/${country.name.common}`}
+        to={`/country/${country.name.common.replace(/\s+/g, "-")}`}
         key={country.cca3}
         className="rounded-md bg-slate-100 px-3 py-1 shadow duration-300 ease-in-out hover:-translate-y-1 dark:bg-dark-blue-500"
       >
@@ -71,7 +74,11 @@ function CountryDetails({
       setBorderCountries(borderCountries);
     };
 
-    fetchData();
+    const debouncedFetchData = debounce(fetchData, 300);
+
+    debouncedFetchData();
+
+    return () => debouncedFetchData.cancel();
   }, [countryName]);
 
   if (!country || isLoading) {
