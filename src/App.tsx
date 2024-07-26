@@ -89,22 +89,27 @@ const App = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        "https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital",
-      );
-
-      const data = await response.json();
-
-      const theWantedCountries = data.filter(
-        (country: Country) => country.name.common !== "Israel",
-      );
-
-      setCountries(theWantedCountries);
-
-      setIsLoading(false);
+      try {
+        const response = await fetch(
+          "https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital",
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data: Country[] = await response.json();
+        setCountries(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    fetchData();
+    const debouncedFetchData = debounce(fetchData, 500);
+
+    debouncedFetchData();
+
+    return () => debouncedFetchData.cancel();
   }, []);
 
   useEffect(() => {
