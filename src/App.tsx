@@ -164,7 +164,7 @@ const App = () => {
               />
             }
           />
-          <Route path="*" element={<ErrorPage />} />
+          <Route path="*" element={<ErrorPage motion={motion} />} />
         </Routes>
       </Router>
     </div>
