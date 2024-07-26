@@ -5,9 +5,9 @@ A comprehensive React application showcasing world countries with interactive fe
 
 **Screenshots:**
 
-![](./src\assets\images\Rest-Countries-API-light.png)
-![](./src\assets\images\Rest-Countries-API-dark.png)
-![](./src\assets\images\Rest-Countries-API-details-page.png)
+![](src/assets/images/Rest-Countries-API-light.png)
+![](src/assets/images/Rest-Countries-API-dark.png)
+![](src/assets/images/Rest-Countries-API-details-page.png)
 
 **Features:**
 
