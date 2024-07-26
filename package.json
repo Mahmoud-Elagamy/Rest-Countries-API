@@ -33,5 +33,10 @@
     "tailwindcss": "^3.4.6",
     "typescript": "^5.2.2",
     "vite": "^5.3.4"
+  },
+  "author": {
+    "name": "Mahmoud Elagamy",
+    "url": "https://github.com/Mahmoud-ElAgamy/",
+    "email": "mahmoudelagamy474@gmail.com"
   }
 }

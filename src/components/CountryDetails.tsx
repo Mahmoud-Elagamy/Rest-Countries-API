@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // Lucide Library
 import { ArrowBigLeft, MapPin } from "lucide-react";
@@ -25,14 +25,31 @@ function CountryDetails({
   const [borderCountries, setBorderCountries] = useState<Country[]>([]);
   const navigate = useNavigate();
 
-  const countryLanguages = Object.keys(country?.languages || {})
-    .map((key) => country?.languages && country?.languages[key])
-    .join(", ");
+  const fetchBorderCountries = async (borders: string[]) => {
+    if (!borders?.length) return [];
 
-  const currencyKey = Object.keys(country?.currencies || {}).join("");
+    const borderCodes = borders.join(",");
+    const response = await fetch(
+      `https://restcountries.com/v3.1/alpha?codes=${borderCodes}`,
+    );
+    const borderData = await response.json();
+    return borderData.filter(
+      (country: Country) => country.name.common !== "Israel",
+    );
+  };
 
-  const countryBorders = borderCountries?.map((country) => {
-    return (
+  const countryLanguages = useMemo(() => {
+    Object.keys(country?.languages || {})
+      .map((key) => country?.languages && country?.languages[key])
+      .join(", ");
+  }, [country]);
+
+  const currencyKey = useMemo(() => {
+    Object.keys(country?.currencies || {}).join("");
+  }, [country]);
+
+  const countryBorders = useMemo(() => {
+    return borderCountries.map((country: Country) => (
       <Link
         to={`/country/${country.name.common}`}
         key={country.cca3}
@@ -40,32 +57,18 @@ function CountryDetails({
       >
         {country.name.common}
       </Link>
-    );
-  });
+    ));
+  }, [borderCountries]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `https://restcountries.com/v3.1/name/${countryName}`,
+        `https://restcountries.com/v3.1/name/${countryName?.replace("-", " ")}`,
       );
-
       const data = await response.json();
-
       setCountry(data[0]);
-
-      if (data[0].borders) {
-        const borderCodes = data[0].borders.join(",");
-        const borderResponse = await fetch(
-          `https://restcountries.com/v3.1/alpha?codes=${borderCodes}`,
-        );
-        const borderData = await borderResponse.json();
-
-        const theWantedCountries = borderData.filter(
-          (country: Country) => country.name.common !== "Israel",
-        );
-
-        setBorderCountries(theWantedCountries);
-      }
+      const borderCountries = await fetchBorderCountries(data[0].borders);
+      setBorderCountries(borderCountries);
     };
 
     fetchData();
@@ -105,6 +108,7 @@ function CountryDetails({
               alt={country.name.common}
               width={innerWidth > 768 ? 380 : 325}
               height={250}
+              loading="lazy"
             />
           </figure>
           <div className="flex flex-col gap-6">
