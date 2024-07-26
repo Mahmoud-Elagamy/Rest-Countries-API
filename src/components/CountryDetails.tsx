@@ -170,7 +170,9 @@ function CountryDetails({
             <div className="flex flex-wrap items-center gap-2">
               <b className="mb-1 block">Border Countries:</b>{" "}
               {countryBorders.length ? (
-                countryBorders
+                <div className="flex flex-wrap items-center justify-center gap-2">
+                  {countryBorders}
+                </div>
               ) : (
                 <p>No border countries for this country.</p>
               )}

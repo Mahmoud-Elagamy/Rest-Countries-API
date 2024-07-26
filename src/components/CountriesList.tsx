@@ -75,7 +75,7 @@ const CountriesList = ({
         <motion.section
           className={`countries-list container text-sm ${
             filteredCountries?.length && "grid"
-          } grid-cols-sm-devices place-content-center gap-12 md:grid-cols-large-devices md:gap-[77px]`}
+          } place-content-center gap-12 md:grid-cols-large-devices md:gap-[77px]`}
         >
           <h2 className="sr-only">Countries</h2>
           {filteredCountries?.length ? (
