@@ -58,7 +58,7 @@ const CountriesList = ({
 
   if (isLoading) {
     return (
-      <div className="container grid grid-cols-large-devices gap-5 md:gap-[77px]">
+      <div className="container grid grid-cols-large-devices place-content-center gap-5 md:gap-[77px]">
         <CountrySkeleton isDarkMode={isDarkMode} />
         <CountrySkeleton isDarkMode={isDarkMode} />
         <CountrySkeleton isDarkMode={isDarkMode} />
