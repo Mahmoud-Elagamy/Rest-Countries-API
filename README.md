@@ -27,7 +27,7 @@ A comprehensive React application showcasing world countries with interactive fe
 
 **Links:**
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Solution URL: [View](https://www.frontendmentor.io/solutions/explore-the-world-a-simple-react-app-powered-by-rest-countries-api-K6WuCYF4xr)
 - Live Site URL: [https://rest-countries-api-app2.netlify.app/](https://rest-countries-api-app2.netlify.app/)
 
 **Author:**
