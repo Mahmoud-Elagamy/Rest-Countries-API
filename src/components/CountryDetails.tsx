@@ -8,14 +8,18 @@ import { ArrowBigLeft, MapPin } from "lucide-react";
 import CountryDetailsSkeleton from "./skeletons/CountryDetailsSkeleton";
 
 // Types
-import { Country } from "../App";
-
+import { Country, MotionType } from "../App";
 type CountryDetailsProps = {
   isLoading: boolean;
   isDarkMode: boolean;
+  motion: MotionType;
 };
 
-function CountryDetails({ isLoading, isDarkMode }: CountryDetailsProps) {
+function CountryDetails({
+  isLoading,
+  isDarkMode,
+  motion,
+}: CountryDetailsProps) {
   const { countryName } = useParams();
   const [country, setCountry] = useState<Country | null>(null);
   const [borderCountries, setBorderCountries] = useState<Country[]>([]);
@@ -55,7 +59,6 @@ function CountryDetails({ isLoading, isDarkMode }: CountryDetailsProps) {
           `https://restcountries.com/v3.1/alpha?codes=${borderCodes}`,
         );
         const borderData = await borderResponse.json();
-        console.log(borderData);
 
         const theWantedCountries = borderData.filter(
           (country: Country) => country.name.common !== "Israel",
@@ -77,7 +80,12 @@ function CountryDetails({ isLoading, isDarkMode }: CountryDetailsProps) {
   }
 
   return (
-    <main className="pb-6 dark:text-gray-300">
+    <motion.main
+      className="pb-6 dark:text-gray-300"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <section className="container">
         <h2 className="sr-only">Country Details</h2>
         <button
@@ -170,7 +178,7 @@ function CountryDetails({ isLoading, isDarkMode }: CountryDetailsProps) {
           </div>
         </article>
       </section>
-    </main>
+    </motion.main>
   );
 }
 

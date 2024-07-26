@@ -9,6 +9,8 @@ import CountriesList from "./components/CountriesList";
 import CountryDetails from "./components/CountryDetails";
 import ErrorPage from "./components/ErrorPage";
 
+import { motion } from "framer-motion";
+
 // Utils
 import applyTheme from "./utils/applyTheme";
 import debounce from "./utils/debounce";
@@ -48,6 +50,8 @@ export type Country = {
   borders?: [];
   cca3?: string;
 };
+
+export type MotionType = typeof motion;
 
 const App = () => {
   const [countries, setCountries] = useState<Country[]>([]);
@@ -145,6 +149,7 @@ const App = () => {
                   currentRegion={currentRegion}
                   isLoading={isLoading}
                   searchQuery={searchQuery}
+                  motion={motion}
                 />
               </>
             }
@@ -152,7 +157,11 @@ const App = () => {
           <Route
             path="/country/:countryName"
             element={
-              <CountryDetails isLoading={isLoading} isDarkMode={isDarkMode} />
+              <CountryDetails
+                isLoading={isLoading}
+                isDarkMode={isDarkMode}
+                motion={motion}
+              />
             }
           />
           <Route path="*" element={<ErrorPage />} />

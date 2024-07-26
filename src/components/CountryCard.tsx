@@ -2,11 +2,23 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Country } from "../App";
 
-const CountryCard = ({ country }: { country: Country }) => {
+// Types
+import { MotionType } from "../App";
+
+const CountryCard = ({
+  country,
+  motion,
+}: {
+  country: Country;
+  motion: MotionType;
+}) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <article
+    <motion.article
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       className={`country-card flex flex-col justify-between rounded-md bg-white shadow-light-box-shadow transition-[background-color,box-shadow,transform] duration-300 ease-in-out dark:bg-dark-blue-500 dark:shadow-dark-box-shadow ${
         isHovered && "-translate-y-2"
       }`}
@@ -54,7 +66,7 @@ const CountryCard = ({ country }: { country: Country }) => {
       >
         Details
       </Link>
-    </article>
+    </motion.article>
   );
 };
 export default CountryCard;

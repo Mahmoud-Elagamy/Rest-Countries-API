@@ -12,7 +12,7 @@
 
 @layer components {
   .flex-center-between {
-    @apply flex items-center justify-between flex-wrap;
+    @apply flex flex-wrap items-center justify-between;
   }
 }
 

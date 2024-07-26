@@ -3,9 +3,6 @@ import { useEffect, useState } from "react";
 // Lucide Library
 import { SearchSlash } from "lucide-react";
 
-// Framer Motion Library
-import { motion } from "framer-motion";
-
 // Custom Components
 import CountryCard from "./CountryCard";
 import Pagination from "./Pagination";
@@ -13,12 +10,14 @@ import CountrySkeleton from "./skeletons/CountrySkeleton";
 
 // Types
 import { Country } from "../App";
+import { MotionType } from "../App";
 type CountriesList = {
   isDarkMode: boolean;
   filteredCountries: Country[];
   currentRegion: string;
   isLoading: boolean;
   searchQuery: string;
+  motion: MotionType;
 };
 
 const CountriesList = ({
@@ -27,6 +26,7 @@ const CountriesList = ({
   currentRegion,
   isLoading,
   searchQuery,
+  motion,
 }: CountriesList) => {
   const countriesPerPageBasedOnBreakPoints = window.innerWidth > 767 ? 12 : 6;
 
@@ -72,7 +72,7 @@ const CountriesList = ({
   return (
     <>
       <main>
-        <section
+        <motion.section
           className={`countries-list container text-sm ${
             filteredCountries?.length && "grid"
           } grid-cols-sm-devices place-content-center gap-12 md:grid-cols-large-devices md:gap-[77px]`}
@@ -80,11 +80,11 @@ const CountriesList = ({
           <h2 className="sr-only">Countries</h2>
           {filteredCountries?.length ? (
             countriesToDisplay.map((country, index) => (
-              <CountryCard key={index} country={country} />
+              <CountryCard key={index} country={country} motion={motion} />
             ))
           ) : (
             <motion.p
-              className="flex items-center justify-center gap-2 text-base"
+              className="flex items-center justify-center gap-2 text-lg"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -93,7 +93,7 @@ const CountriesList = ({
               No results found for "{searchQuery}" in this region.
             </motion.p>
           )}
-        </section>
+        </motion.section>
       </main>
       <footer className="pb-3 pt-10">
         {totalPages > 1 && (
