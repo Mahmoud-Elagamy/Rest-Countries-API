@@ -63,7 +63,7 @@ function CountryDetails({
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `https://restcountries.com/v3.1/name/${countryName?.replace("-", " ")}`,
+        `https://restcountries.com/v3.1/name/${countryName?.replace(/-/g, " ")}`,
       );
       const data = await response.json();
       setCountry(data[0]);
