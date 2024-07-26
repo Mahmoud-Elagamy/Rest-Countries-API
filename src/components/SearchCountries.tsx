@@ -31,7 +31,6 @@ const SearchCountries = ({
         type="text"
         placeholder="Search for a country..."
         autoComplete="off"
-        autoCorrect="on"
         autoFocus
         required
         maxLength={18}
