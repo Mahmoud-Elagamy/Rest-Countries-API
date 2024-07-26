@@ -22,7 +22,7 @@ function Pagination({
       </h3>
       <div>
         <button
-          className="pagination-button py-1 px-2 mr-[2.8rem] border border-[#ddd] dark:border-[#333] rounded cursor-pointer duration-300 ease-in-out active:scale-95 md:active:scale-50"
+          className="pagination-button mr-[2.8rem] cursor-pointer rounded border border-[#ddd] px-2 py-1 duration-300 ease-in-out active:scale-95 dark:border-[#333] md:active:scale-50"
           title={
             currentPage === 1 ? "No Previous Pages Available" : "Previous Page"
           }
@@ -32,10 +32,10 @@ function Pagination({
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
         >
-          <ChevronLeft name="previous" />
+          <ChevronLeft />
         </button>
         <button
-          className="pagination-button py-1 px-2 border border-[#ddd] dark:border-[#333] rounded cursor-pointer duration-300 ease-in-out active:scale-95 md:active:scale-50"
+          className="pagination-button cursor-pointer rounded border border-[#ddd] px-2 py-1 duration-300 ease-in-out active:scale-95 dark:border-[#333] md:active:scale-50"
           title={
             currentPage === totalPages ? "No More Pages Available" : "Next Page"
           }
@@ -45,7 +45,7 @@ function Pagination({
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
         >
-          <ChevronRight name="next" />
+          <ChevronRight />
         </button>
       </div>
     </div>
