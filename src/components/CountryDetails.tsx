@@ -39,13 +39,13 @@ function CountryDetails({
   };
 
   const countryLanguages = useMemo(() => {
-    Object.keys(country?.languages || {})
+    return Object.keys(country?.languages || {})
       .map((key) => country?.languages && country?.languages[key])
       .join(", ");
   }, [country]);
 
   const currencyKey = useMemo(() => {
-    Object.keys(country?.currencies || {}).join("");
+    return Object.keys(country?.currencies || {}).join("");
   }, [country]);
 
   const countryBorders = useMemo(() => {
