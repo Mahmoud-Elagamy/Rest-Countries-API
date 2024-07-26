@@ -5,13 +5,13 @@ A comprehensive React application showcasing world countries with interactive fe
 
 **Screenshots:**
 
-![](src\assets\images\Rest-Countries-API-light.png)
-![](src\assets\images\Rest-Countries-API-dark.png)
-![](src\assets\images\Rest-Countries-API-details-page.png)
+![](./src\assets\images\Rest-Countries-API-light.png)
+![](./src\assets\images\Rest-Countries-API-dark.png)
+![](./src\assets\images\Rest-Countries-API-details-page.png)
 
 **Features:**
 
-- See all countries from the API on the homepage
+- See all countries from the API on the homepage.
 - Search for countries by name, and filter by region.
 - Detailed country information including flags, population, languages, etc...
 - Stunning animations and transitions powered by Framer Motion.
@@ -28,7 +28,7 @@ A comprehensive React application showcasing world countries with interactive fe
 **Links:**
 
 - Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [https://rest-countries-api-app2.netlify.app/](https://https://rest-countries-api-app2.netlify.app/)
+- Live Site URL: [https://rest-countries-api-app2.netlify.app/](https://rest-countries-api-app2.netlify.app/)
 
 **Author:**
 
