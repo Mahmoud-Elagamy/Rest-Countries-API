@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import SearchCountries from "./components/SearchCountries";
 import FilterCountries from "./components/FilterCountries";
 import CountriesList from "./components/CountriesList";
+import Pagination from "./components/Pagination";
 import CountryDetails from "./components/CountryDetails";
 import ErrorPage from "./components/ErrorPage";
 
@@ -53,6 +54,8 @@ export type Country = {
 
 export type MotionType = typeof motion;
 
+const countriesPerPageBasedOnBreakPoints = window.innerWidth > 767 ? 12 : 6;
+
 const App = () => {
   const [countries, setCountries] = useState<Country[]>([]);
   const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
@@ -60,6 +63,18 @@ const App = () => {
   const [currentRegion, setCurrentRegion] = useState("All Regions");
   const [isLoading, setIsLoading] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(countriesPerPageBasedOnBreakPoints);
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevState) => prevState - 1);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevState) => prevState + 1);
+  };
+
+  const totalPages = Math.ceil(filteredCountries.length / pageSize);
 
   const filterCountries = () => {
     let filtered = countries;
@@ -127,6 +142,10 @@ const App = () => {
     };
   }, [currentRegion, searchQuery, debouncedFilter]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [currentRegion]);
+
   return (
     <div className="app min-h-screen bg-dark-gray-600 text-dark-blue-700 transition-[background-color] duration-300 ease-in-out dark:bg-dark-blue-600 dark:text-white">
       <Router>
@@ -136,26 +155,42 @@ const App = () => {
             path="/"
             element={
               <>
-                <div className="flex-center-between container mb-10">
-                  <SearchCountries
-                    setSearchQuery={setSearchQuery}
-                    searchQuery={searchQuery}
-                  />
-                  <FilterCountries
-                    currentRegion={currentRegion}
-                    setCurrentRegion={setCurrentRegion}
-                    handleFilterChange={handleFilterChange}
-                  />
-                </div>
+                <main>
+                  <section className="flex-center-between container mb-10">
+                    <h2 className="sr-only">
+                      Search for a country and filter by region
+                    </h2>
+                    <SearchCountries
+                      setSearchQuery={setSearchQuery}
+                      searchQuery={searchQuery}
+                    />
+                    <FilterCountries
+                      currentRegion={currentRegion}
+                      setCurrentRegion={setCurrentRegion}
+                      handleFilterChange={handleFilterChange}
+                    />
+                  </section>
 
-                <CountriesList
-                  isDarkMode={isDarkMode}
-                  filteredCountries={filteredCountries}
-                  currentRegion={currentRegion}
-                  isLoading={isLoading}
-                  searchQuery={searchQuery}
-                  motion={motion}
-                />
+                  <CountriesList
+                    isDarkMode={isDarkMode}
+                    filteredCountries={filteredCountries}
+                    isLoading={isLoading}
+                    searchQuery={searchQuery}
+                    motion={motion}
+                    currentPage={currentPage}
+                    pageSize={pageSize}
+                  />
+                </main>
+                <footer className="pb-3 pt-10">
+                  {totalPages > 1 && (
+                    <Pagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      handleNextPage={handleNextPage}
+                      handlePreviousPage={handlePreviousPage}
+                    />
+                  )}
+                </footer>
               </>
             }
           ></Route>
