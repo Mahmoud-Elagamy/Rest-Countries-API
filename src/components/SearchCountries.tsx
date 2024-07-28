@@ -109,7 +109,7 @@ const SearchCountries = ({
 
   const content = (
     <motion.menu
-      className="absolute left-6 top-12 z-[1] max-h-60 w-60 space-y-2 overflow-auto rounded-md border border-gray-300 bg-white/50 py-2 shadow-md backdrop-blur-sm transition-all duration-300 ease-in-out *:p-2 dark:border-gray-600 dark:bg-dark-blue-500/50"
+      className="dropdown-menu-w absolute left-0 top-12 z-[1] mx-6 max-h-60 space-y-2 overflow-auto rounded-md border border-gray-300 bg-white/50 py-2 shadow-md backdrop-blur-sm transition-all duration-300 ease-in-out *:p-2 dark:border-gray-600 dark:bg-dark-blue-500/50 md:w-60"
       ref={menuRef}
       initial="hidden"
       animate={searchQuery ? "visible" : "hidden"}
