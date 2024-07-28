@@ -16,6 +16,10 @@
   }
 }
 
+body {
+  font-display: swap;
+}
+
 .pagination button.active,
 .pagination button:not(:disabled):hover {
   background-color: var(--bg-color);

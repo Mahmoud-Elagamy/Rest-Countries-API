@@ -1,5 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState, useLayoutEffect, useEffect, useMemo } from "react";
+import {
+  useState,
+  useLayoutEffect,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
 
 // Custom Components
 import Header from "./components/Header";
@@ -50,6 +56,7 @@ export type Country = {
 
   borders?: [];
   cca3?: string;
+  area?: number;
 };
 
 export type MotionType = typeof motion;
@@ -65,6 +72,7 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(countriesPerPageBasedOnBreakPoints);
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const handlePreviousPage = () => {
     setCurrentPage((prevState) => prevState - 1);
@@ -76,7 +84,12 @@ const App = () => {
 
   const totalPages = Math.ceil(filteredCountries.length / pageSize);
 
-  const filterCountries = () => {
+  const displayedCountries = countries.filter(
+    (country) =>
+      currentRegion === "All Regions" || country.region === currentRegion,
+  );
+
+  const filterCountries = useCallback(() => {
     let filtered = countries;
 
     if (currentRegion !== "All Regions") {
@@ -85,12 +98,16 @@ const App = () => {
 
     if (searchQuery) {
       filtered = filtered.filter((country) =>
-        country.name.common.toLowerCase().includes(searchQuery.toLowerCase()),
+        country.name.common.toLowerCase().startsWith(searchQuery.toLowerCase()),
       );
+
+      setDropdownVisible(true);
+    } else {
+      setDropdownVisible(false);
     }
 
     setFilteredCountries(filtered);
-  };
+  }, [countries, currentRegion, searchQuery]);
 
   const handleFilterChange = (filter: string) => {
     setCurrentRegion(filter);
@@ -99,8 +116,8 @@ const App = () => {
   const debouncedFilter = useMemo(() => {
     return debounce(() => {
       filterCountries();
-    }, 300);
-  }, [countries, currentRegion, searchQuery]);
+    }, 700);
+  }, [filterCountries]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -112,7 +129,12 @@ const App = () => {
           throw new Error("Network response was not ok");
         }
         const data: Country[] = await response.json();
-        setCountries(data);
+
+        const wantedCountries = data.filter(
+          (country) => country.name.common !== "Israel",
+        );
+
+        setCountries(wantedCountries);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -156,13 +178,17 @@ const App = () => {
             element={
               <>
                 <main>
-                  <section className="flex-center-between container mb-10">
+                  <section className="flex-center-between container relative mb-10">
                     <h2 className="sr-only">
                       Search for a country and filter by region
                     </h2>
                     <SearchCountries
                       setSearchQuery={setSearchQuery}
                       searchQuery={searchQuery}
+                      isDropdownVisible={isDropdownVisible}
+                      setDropdownVisible={setDropdownVisible}
+                      filteredCountries={filteredCountries}
+                      motion={motion}
                     />
                     <FilterCountries
                       currentRegion={currentRegion}
@@ -173,9 +199,8 @@ const App = () => {
 
                   <CountriesList
                     isDarkMode={isDarkMode}
-                    filteredCountries={filteredCountries}
+                    displayedCountries={displayedCountries}
                     isLoading={isLoading}
-                    searchQuery={searchQuery}
                     motion={motion}
                     currentPage={currentPage}
                     pageSize={pageSize}

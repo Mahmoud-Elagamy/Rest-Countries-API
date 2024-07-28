@@ -29,7 +29,7 @@ const FilterCountries = ({
   const menuRef = useRef<HTMLMenuElement>(null);
 
   const toggleMenu = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.stopPropagation();
     setIsMenuOpen((prevState) => !prevState);
@@ -64,7 +64,7 @@ const FilterCountries = ({
   return (
     <div className="relative">
       <button
-        className="font-semibold flex items-center gap-1 bg-white dark:bg-dark-blue-500 shadow-sm p-3 rounded-md transition-[background-color,transform] duration-300 ease-in-out active:scale-95 md:active:scale-50"
+        className="flex items-center gap-1 rounded-md bg-white px-3 py-2 font-semibold shadow-sm transition-[background-color,transform] duration-300 ease-in-out active:scale-95 dark:bg-dark-blue-500 md:active:scale-50"
         onClick={toggleMenu}
       >
         Filter by Region{" "}
@@ -77,7 +77,7 @@ const FilterCountries = ({
       </button>
 
       <menu
-        className={`absolute z-[1] w-full py-1 *:px-3 space-y-1 rounded-md transition-[background-color,transform] duration-300 ease-in-out bg-white dark:bg-dark-blue-500 shadow-md mt-1 cursor-pointer origin-top scale-0 ${
+        className={`absolute z-[1] mt-1 w-full origin-top scale-0 cursor-pointer space-y-1 rounded-md bg-white py-1 shadow-md transition-[background-color,transform] duration-300 ease-in-out *:px-3 dark:bg-dark-blue-500 ${
           isMenuOpen && "scale-100"
         }`}
         ref={menuRef}
@@ -85,12 +85,12 @@ const FilterCountries = ({
         {regions.map((region) => (
           <li
             key={region}
-            className={`rounded-md mx-1 ${
+            className={`mx-1 rounded-md ${
               currentRegion === region && "bg-slate-200 dark:bg-dark-blue-600"
-            } hover:bg-slate-200 dark:hover:bg-dark-blue-600 `}
+            } hover:bg-slate-200 dark:hover:bg-dark-blue-600`}
           >
             <button
-              className="w-full text-left py-1"
+              className="w-full py-1 text-left"
               type="button"
               tabIndex={isMenuOpen ? 0 : -1}
               onClick={() => {

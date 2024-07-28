@@ -74,7 +74,7 @@ function CountryDetails({
       setBorderCountries(borderCountries);
     };
 
-    const debouncedFetchData = debounce(fetchData, 300);
+    const debouncedFetchData = debounce(fetchData, 500);
 
     debouncedFetchData();
 
@@ -176,6 +176,9 @@ function CountryDetails({
                     <b>Location:</b> <MapPin size={20} />
                   </a>
                 )}
+                <p>
+                  <b>Area:</b> {country?.area?.toLocaleString()} <sup>km²</sup>
+                </p>
               </div>
             </div>
             <div className="flex flex-wrap items-center gap-2">

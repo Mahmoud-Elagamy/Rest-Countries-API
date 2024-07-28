@@ -37,22 +37,22 @@ const CountryCard = ({
         <h3 className="mb-2 max-w-[234px] text-balance text-lg font-extrabold tracking-wide">
           {country.name.common}
         </h3>
-        <p>
+        <p className="mb-1">
           Population:{" "}
           <span className="font-normal dark:text-zinc-300">
             {country.population.toLocaleString()}
+          </span>
+        </p>
+        <p className="mb-1">
+          Capital:{" "}
+          <span className="font-normal dark:text-zinc-300">
+            {country.capital}
           </span>
         </p>
         <p>
           Region:{" "}
           <span className="font-normal dark:text-zinc-300">
             {country.region}
-          </span>
-        </p>
-        <p>
-          Capital:{" "}
-          <span className="font-normal dark:text-zinc-300">
-            {country.capital}
           </span>
         </p>
       </div>
