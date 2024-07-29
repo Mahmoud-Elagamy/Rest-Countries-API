@@ -9,7 +9,8 @@ import { Link } from "react-router-dom";
 import ThreeDotSpinner from "./LoadingSpinner";
 
 // Types
-import { Country, MotionType } from "../App";
+import { MotionType } from "../App";
+import { Country } from "./hooks/useCountries";
 
 // Types
 type SearchCountriesProps = {
@@ -94,7 +95,7 @@ const SearchCountries = ({
 
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 800);
 
     return () => clearTimeout(timer);
   }, [filteredCountries.length, searchQuery.length]);
@@ -102,12 +103,12 @@ const SearchCountries = ({
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       inputRef.current?.focus();
-    }, 600);
+    }, 700);
 
     return () => clearTimeout(timeoutId);
   }, []);
 
-  const content = (
+  const dropdownMenu = (
     <motion.menu
       className="dropdown-menu-w absolute left-0 top-12 z-[1] mx-6 max-h-60 space-y-2 overflow-auto rounded-md border border-gray-300 bg-white/50 py-2 shadow-md backdrop-blur-sm transition-all duration-300 ease-in-out *:p-2 dark:border-gray-600 dark:bg-dark-blue-500/50 md:w-60"
       ref={menuRef}
@@ -193,7 +194,7 @@ const SearchCountries = ({
           <Search size={18} color="hsl(0, 0%, 52%)" />
         </button>
       </form>
-      {isDropdownVisible && content}
+      {isDropdownVisible && dropdownMenu}
     </>
   );
 };

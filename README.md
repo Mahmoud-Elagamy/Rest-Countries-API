@@ -1,4 +1,4 @@
-# React Country App
+# React Countries App
 
 **Description:**
 A comprehensive React application showcasing world countries with interactive features and stunning visuals. Built with TypeScript for type safety, Tailwind CSS for rapid UI development, and Framer Motion for dynamic animations.

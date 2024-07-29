@@ -27,7 +27,8 @@ export default {
         "light-box-shadow": "0 0 6px 8px #eee",
       },
       gridTemplateColumns: {
-        "large-devices": "repeat(auto-fill, minmax(236px, 236px))",
+        "main-grid": "repeat(auto-fill, minmax(225px, 1fr))",
+        "alt-grid": "repeat(auto-fill, minmax(225px, 250px))",
       },
     },
   },

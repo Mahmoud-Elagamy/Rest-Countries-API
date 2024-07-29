@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Country } from "../App";
-
+import { Country } from "./hooks/useCountries";
 // Types
 import { MotionType } from "../App";
 
