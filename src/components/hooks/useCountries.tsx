@@ -116,6 +116,7 @@ const useCountries = () => {
     currentRegion,
     setCurrentRegion,
     isLoading,
+    setIsLoading,
     isDropdownVisible,
     setDropdownVisible,
   };

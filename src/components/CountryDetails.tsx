@@ -17,12 +17,14 @@ import { MotionType } from "../App";
 import { Country } from "./hooks/useCountries";
 type CountryDetailsProps = {
   isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
   motion: MotionType;
 };
 
 function CountryDetails({
   isLoading,
+  setIsLoading,
   isDarkMode,
   motion,
 }: CountryDetailsProps) {
@@ -55,7 +57,7 @@ function CountryDetails({
   }, [country]);
 
   const countryBorders = useMemo(() => {
-    return borderCountries.map((country: Country) => (
+    return borderCountries?.map((country: Country) => (
       <Link
         to={`/country/${country.name.common.replace(/\s+/g, "-")}`}
         key={country.cca3}
@@ -68,13 +70,20 @@ function CountryDetails({
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        `https://restcountries.com/v3.1/name/${countryName?.replace(/-/g, " ")}`,
-      );
-      const data = await response.json();
-      setCountry(data[0]);
-      const borderCountries = await fetchBorderCountries(data[0].borders);
-      setBorderCountries(borderCountries);
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `https://restcountries.com/v3.1/name/${countryName?.replace(/-/g, " ")}`,
+        );
+        const data = await response.json();
+        setCountry(data[0]);
+        const borderCountries = await fetchBorderCountries(data[0].borders);
+        setBorderCountries(borderCountries);
+      } catch (error) {
+        console.error("Error fetching country data:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     const debouncedFetchData = debounce(fetchData, 500);
@@ -82,7 +91,7 @@ function CountryDetails({
     debouncedFetchData();
 
     return () => debouncedFetchData.cancel();
-  }, [countryName]);
+  }, [countryName, setIsLoading]);
 
   if (!country || isLoading) {
     return (

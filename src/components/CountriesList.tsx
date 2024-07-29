@@ -31,7 +31,7 @@ const CountriesList = ({
 
   if (isLoading) {
     return (
-      <div className="grid-cols-main-grid container grid place-content-center gap-5 md:gap-[77px]">
+      <div className="container grid grid-cols-main-grid place-content-center gap-5 md:gap-[77px]">
         <CountrySkeleton isDarkMode={isDarkMode} />
         <CountrySkeleton isDarkMode={isDarkMode} />
         <CountrySkeleton isDarkMode={isDarkMode} />
@@ -46,7 +46,7 @@ const CountriesList = ({
     <motion.section
       className={`countries-list container text-sm ${
         displayedCountries?.length && "grid"
-      } md:grid-cols-alt-grid xl:grid-cols-main-grid place-content-center gap-12 md:gap-[77px]`}
+      } place-content-center gap-12 md:grid-cols-alt-grid md:gap-[77px] xl:grid-cols-main-grid`}
     >
       <h2 className="sr-only">Countries</h2>
       {displayedCountries?.length &&

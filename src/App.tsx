@@ -33,6 +33,7 @@ const App = () => {
     searchQuery,
     setSearchQuery,
     isLoading,
+    setIsLoading,
     isDropdownVisible,
     setDropdownVisible,
   } = useCountries();
@@ -124,6 +125,7 @@ const App = () => {
             element={
               <CountryDetails
                 isLoading={isLoading}
+                setIsLoading={setIsLoading}
                 isDarkMode={isDarkMode}
                 motion={motion}
               />
