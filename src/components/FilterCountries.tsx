@@ -67,7 +67,7 @@ const FilterCountries = ({
         className="flex items-center gap-1 rounded-md bg-white px-3 py-2 font-semibold shadow-sm transition-[background-color,transform] duration-300 ease-in-out active:scale-95 dark:bg-dark-blue-500 md:active:scale-50"
         onClick={toggleMenu}
       >
-        Filter by Region{" "}
+        Change Region{" "}
         <ChevronDown
           size={16}
           className={`transition-[transform] duration-300 ease-in-out ${
