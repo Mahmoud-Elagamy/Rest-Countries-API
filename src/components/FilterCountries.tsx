@@ -7,13 +7,13 @@ import { ChevronDown } from "lucide-react";
 type FilterCountriesProps = {
   currentRegion: string;
   setCurrentRegion: React.Dispatch<React.SetStateAction<string>>;
-  handleFilterChange: (filter: string) => void;
+  handleRegionChange: (region: string) => void;
 };
 
 const FilterCountries = ({
   currentRegion,
   setCurrentRegion,
-  handleFilterChange,
+  handleRegionChange,
 }: FilterCountriesProps) => {
   const regions = [
     "All Regions",
@@ -95,7 +95,7 @@ const FilterCountries = ({
               tabIndex={isMenuOpen ? 0 : -1}
               onClick={() => {
                 setIsMenuOpen(false);
-                handleFilterChange(region);
+                handleRegionChange(region);
                 setCurrentRegion(region);
               }}
             >

@@ -5,7 +5,7 @@ import CountrySkeleton from "./skeletons/CountrySkeleton";
 // Types
 import { Country } from "./hooks/useCountries";
 import { MotionType } from "../App";
-type CountriesList = {
+type CountriesListProps = {
   isDarkMode: boolean;
   displayedCountries: Country[];
   isLoading: boolean;
@@ -21,7 +21,7 @@ const CountriesList = ({
   motion,
   currentPage,
   pageSize,
-}: CountriesList) => {
+}: CountriesListProps) => {
   const startIndex = (currentPage - 1) * pageSize;
 
   const slicedCountries = displayedCountries.slice(

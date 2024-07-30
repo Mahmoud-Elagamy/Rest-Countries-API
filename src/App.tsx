@@ -22,7 +22,7 @@ import applyTheme from "./utils/applyTheme";
 // Types
 export type MotionType = typeof motion;
 
-const countriesPerPageBasedOnBreakPoints = window.innerWidth > 767 ? 12 : 6;
+const CountriesPerPage = window.innerWidth > 767 ? 12 : 6;
 
 const App = () => {
   const {
@@ -40,7 +40,6 @@ const App = () => {
 
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(countriesPerPageBasedOnBreakPoints);
 
   const handlePreviousPage = () => {
     setCurrentPage((prevState) => prevState - 1);
@@ -55,10 +54,10 @@ const App = () => {
       currentRegion === "All Regions" || country.region === currentRegion,
   );
 
-  const totalPages = Math.ceil(displayedCountries.length / pageSize);
+  const totalPages = Math.ceil(displayedCountries.length / CountriesPerPage);
 
-  const handleFilterChange = (filter: string) => {
-    setCurrentRegion(filter);
+  const handleRegionChange = (region: string) => {
+    setCurrentRegion(region);
   };
 
   useLayoutEffect(() => {
@@ -94,7 +93,7 @@ const App = () => {
                     <FilterCountries
                       currentRegion={currentRegion}
                       setCurrentRegion={setCurrentRegion}
-                      handleFilterChange={handleFilterChange}
+                      handleRegionChange={handleRegionChange}
                     />
                   </section>
 
@@ -104,7 +103,7 @@ const App = () => {
                     isLoading={isLoading}
                     motion={motion}
                     currentPage={currentPage}
-                    pageSize={pageSize}
+                    pageSize={CountriesPerPage}
                   />
                 </main>
                 <footer className="pb-3 pt-10">
