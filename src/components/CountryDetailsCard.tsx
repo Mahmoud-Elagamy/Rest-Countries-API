@@ -20,7 +20,7 @@ function CountryDetailsCard({
     <article className="flex flex-wrap items-center justify-between">
       <figure className="mb-4">
         <img
-          className="h-[225px] md:h-[300px]"
+          className="h-[225px] rounded-md md:h-[300px]"
           src={country.flags.png}
           alt={country.name.common}
           width={innerWidth > 768 ? 380 : 325}
