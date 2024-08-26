@@ -68,7 +68,7 @@ const useCountries = () => {
       }
     };
 
-    const debouncedFetchData = debounce(fetchData, 600);
+    const debouncedFetchData = debounce(fetchData, 1000);
 
     debouncedFetchData();
 
