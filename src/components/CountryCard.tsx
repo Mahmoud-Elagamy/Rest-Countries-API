@@ -25,12 +25,11 @@ const CountryCard = ({
     >
       <figure className="mb-4">
         <img
-          className="h-[160px] rounded-tl-md rounded-tr-md object-cover"
+          className="max-h-[160px] w-full rounded-tl-md rounded-tr-md object-cover"
           src={country.flags.png}
           alt={country.name.common}
-          loading="lazy"
-          width={250}
-          height={160}
+          width={320}
+          height={320}
         />
       </figure>
       <div className="p-2 font-bold">
