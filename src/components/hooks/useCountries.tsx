@@ -49,7 +49,7 @@ const useCountries = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital",
+          "https://restcountries.com/v3.1/all?fields=name,flags,population,region,capital,subregion,maps,currencies,languages,borders,cca3,area",
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -68,7 +68,7 @@ const useCountries = () => {
       }
     };
 
-    const debouncedFetchData = debounce(fetchData, 500);
+    const debouncedFetchData = debounce(fetchData, 600);
 
     debouncedFetchData();
 
@@ -101,6 +101,16 @@ const useCountries = () => {
     }, 700);
   }, [filterCountries]);
 
+  const getCountryByName = useCallback(
+    (name: string) => {
+      const country = countries.find(
+        (country) => country.name.common.toLowerCase() === name.toLowerCase(),
+      );
+      return country || null;
+    },
+    [countries],
+  );
+
   useEffect(() => {
     debouncedFilter();
     return () => {
@@ -119,6 +129,7 @@ const useCountries = () => {
     setIsLoading,
     isDropdownVisible,
     setDropdownVisible,
+    getCountryByName,
   };
 };
 export default useCountries;

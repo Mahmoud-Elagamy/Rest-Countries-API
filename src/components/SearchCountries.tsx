@@ -22,6 +22,16 @@ type SearchCountriesProps = {
   setDropdownVisible: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+const dropdownVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 5 },
+  visible: { opacity: 1, y: 0 },
+};
+
 const SearchCountries = ({
   searchQuery,
   setSearchQuery,
@@ -34,16 +44,6 @@ const SearchCountries = ({
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-  };
-
-  const dropdownVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 5 },
-    visible: { opacity: 1, y: 0 },
   };
 
   const menuRef = useRef<HTMLMenuElement>(null); // Ref for the menu element

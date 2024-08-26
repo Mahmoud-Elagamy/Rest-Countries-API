@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { useState, useLayoutEffect, useEffect } from "react";
+import { useState, useLayoutEffect, useEffect, useMemo } from "react";
 
 // Custom Components
 import Header from "./components/Header";
@@ -49,12 +49,19 @@ const App = () => {
     setCurrentPage((prevState) => prevState + 1);
   };
 
-  const displayedCountries = countries.filter(
-    (country) =>
-      currentRegion === "All Regions" || country.region === currentRegion,
+  const displayedCountries = useMemo(
+    () =>
+      countries.filter(
+        (country) =>
+          currentRegion === "All Regions" || country.region === currentRegion,
+      ),
+    [countries, currentRegion],
   );
 
-  const totalPages = Math.ceil(displayedCountries.length / CountriesPerPage);
+  const totalPages = useMemo(
+    () => Math.ceil(displayedCountries.length / CountriesPerPage),
+    [displayedCountries.length],
+  );
 
   const handleRegionChange = (region: string) => {
     setCurrentRegion(region);

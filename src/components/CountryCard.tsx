@@ -57,7 +57,7 @@ const CountryCard = ({
         </p>
       </div>
       <Link
-        to={`/country/${country.name.common.replace(/\s+/g, "-")}`}
+        to={`/country/${country.name.common.replace(/\s+?/g, "-")}`}
         className="border-slate-[#ccc] mb-2 ml-auto mr-2 block w-fit cursor-pointer rounded-md border px-2 py-1 shadow duration-300 ease-in-out hover:bg-slate-200 active:scale-95 dark:border-[#5555555d] dark:hover:bg-dark-blue-600 md:active:scale-50"
         title={`View more details about ${country.name.common}`}
         aria-label={`View more details about ${country.name.common}`}

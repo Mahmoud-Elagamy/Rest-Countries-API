@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 
 import { useParams, useNavigate, Link } from "react-router-dom";
 
@@ -9,8 +9,8 @@ import { ArrowBigLeft } from "lucide-react";
 import CountryDetailsCard from "./CountryDetailsCard";
 import CountryDetailsSkeleton from "./skeletons/CountryDetailsSkeleton";
 
-// Utils
-import debounce from "../utils/debounce";
+// Custom Hooks
+import useCountries from "./hooks/useCountries";
 
 // Types
 import { MotionType } from "../App";
@@ -28,23 +28,24 @@ function CountryDetails({
   isDarkMode,
   motion,
 }: CountryDetailsProps) {
-  const { countryName } = useParams();
+  const { countries, getCountryByName } = useCountries();
+
   const [country, setCountry] = useState<Country | null>(null);
   const [borderCountries, setBorderCountries] = useState<Country[]>([]);
+
+  const { countryName } = useParams();
   const navigate = useNavigate();
 
-  const fetchBorderCountries = async (borders: string[]) => {
-    if (!borders?.length) return [];
-
-    const borderCodes = borders.join(",");
-    const response = await fetch(
-      `https://restcountries.com/v3.1/alpha?codes=${borderCodes}`,
-    );
-    const borderData = await response.json();
-    return borderData.filter(
-      (country: Country) => country.name.common !== "Israel",
-    );
-  };
+  const fetchBorderCountries = useCallback(
+    async (borders: string[]) => {
+      if (!borders?.length) return [];
+      const borderData = borders
+        .map((code) => countries.find((country) => country.cca3 === code))
+        .filter((country) => country !== undefined);
+      return borderData;
+    },
+    [countries],
+  );
 
   const countryLanguages = useMemo(() => {
     return Object.keys(country?.languages || {})
@@ -69,29 +70,29 @@ function CountryDetails({
   }, [borderCountries]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const loadCountryData = async () => {
       setIsLoading(true);
-      try {
-        const response = await fetch(
-          `https://restcountries.com/v3.1/name/${countryName?.replace(/-/g, " ")}`,
+
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
+      const selectedCountry = getCountryByName(
+        countryName?.replace(/-/g, " ") || "",
+      );
+
+      if (selectedCountry) {
+        setCountry(selectedCountry);
+
+        const borderData = await fetchBorderCountries(
+          selectedCountry.borders || [],
         );
-        const data = await response.json();
-        setCountry(data[0]);
-        const borderCountries = await fetchBorderCountries(data[0].borders);
-        setBorderCountries(borderCountries);
-      } catch (error) {
-        console.error("Error fetching country data:", error);
-      } finally {
-        setIsLoading(false);
+        setBorderCountries(borderData);
       }
+
+      setIsLoading(false);
     };
 
-    const debouncedFetchData = debounce(fetchData, 500);
-
-    debouncedFetchData();
-
-    return () => debouncedFetchData.cancel();
-  }, [countryName, setIsLoading]);
+    loadCountryData();
+  }, [countryName, getCountryByName, fetchBorderCountries, setIsLoading]);
 
   if (!country || isLoading) {
     return (

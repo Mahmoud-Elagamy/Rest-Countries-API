@@ -32,12 +32,9 @@ const CountriesList = ({
   if (isLoading) {
     return (
       <div className="container grid grid-cols-main-grid place-content-center gap-5 md:gap-[77px]">
-        <CountrySkeleton isDarkMode={isDarkMode} />
-        <CountrySkeleton isDarkMode={isDarkMode} />
-        <CountrySkeleton isDarkMode={isDarkMode} />
-        <CountrySkeleton isDarkMode={isDarkMode} />
-        <CountrySkeleton isDarkMode={isDarkMode} />
-        <CountrySkeleton isDarkMode={isDarkMode} />
+        {Array.from({ length: 10 }).map((_, index) => (
+          <CountrySkeleton key={index} isDarkMode={isDarkMode} />
+        ))}
       </div>
     );
   }
