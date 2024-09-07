@@ -94,6 +94,14 @@ function CountryDetails({
     loadCountryData();
   }, [countryName, getCountryByName, fetchBorderCountries, setIsLoading]);
 
+  useEffect(() => {
+    if (country) {
+      document.title = `${country?.name.common}`;
+    } else {
+      document.title = "Loading country details...";
+    }
+  }, [country]);
+
   if (!country || isLoading) {
     return (
       <div className="container">
