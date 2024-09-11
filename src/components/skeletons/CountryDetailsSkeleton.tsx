@@ -9,7 +9,7 @@ const CountryDetailsSkeleton = ({ isDarkMode }: CountrySkeletonProps) => {
   const highlightColor = isDarkMode ? "hsl(209, 23%, 22%)" : "#f0f0f0";
 
   return (
-    <div className="flex flex-wrap items-center justify-center rounded border border-slate-200 p-4 lg:justify-between">
+    <div className="flex flex-wrap items-center justify-center rounded-md border border-slate-200 p-4 lg:justify-between">
       <Skeleton
         className="block w-[240px] text-center"
         height={250}

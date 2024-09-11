@@ -22,7 +22,7 @@ function Pagination({
       </h3>
       <div>
         <button
-          className="pagination-button mr-[2.8rem] cursor-pointer rounded border border-[#ddd] px-2 py-1 duration-300 ease-in-out active:scale-95 dark:border-[#333] md:active:scale-50"
+          className="pagination-button mr-[2.8rem] cursor-pointer rounded-md border border-[#ddd] px-2 py-1 duration-300 ease-in-out active:scale-95 dark:border-[#333] md:active:scale-50"
           title={
             currentPage === 1 ? "No Previous Pages Available" : "Previous Page"
           }

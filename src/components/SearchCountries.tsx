@@ -139,7 +139,7 @@ const SearchCountries = ({
                     onClick={() => setSearchQuery("")}
                   >
                     <img
-                      className="h-[25px] rounded-sm"
+                      className="h-[25px] rounded-md"
                       src={country.flags.png}
                       alt={country.name.common}
                       loading="lazy"

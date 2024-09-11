@@ -18,7 +18,7 @@ const ErrorPage = ({ motion }: { motion: MotionType }) => {
         We couldn't find the page you were looking for. It might have been
         removed, renamed, or did not exist in the first place.
       </p>
-      <Link to="/" className="rounded bg-blue-500 px-4 py-2 text-white">
+      <Link to="/" className="rounded-md bg-blue-500 px-4 py-2 text-white">
         Go Back to Home
       </Link>
     </motion.div>
