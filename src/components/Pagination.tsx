@@ -35,7 +35,7 @@ function Pagination({
           <ChevronLeft />
         </button>
         <button
-          className="pagination-button cursor-pointer rounded border border-[#ddd] px-2 py-1 duration-300 ease-in-out active:scale-95 dark:border-[#333] md:active:scale-50"
+          className="pagination-button cursor-pointer rounded-md border border-[#ddd] px-2 py-1 duration-300 ease-in-out active:scale-95 dark:border-[#333] md:active:scale-50"
           title={
             currentPage === totalPages ? "No More Pages Available" : "Next Page"
           }

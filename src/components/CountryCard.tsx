@@ -19,13 +19,13 @@ const CountryCard = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className={`country-card flex flex-col justify-between rounded-md bg-white shadow-light-box-shadow transition-[background-color,box-shadow,transform] duration-300 ease-in-out dark:bg-dark-blue-500 dark:shadow-dark-box-shadow ${
+      className={`country-card flex flex-col justify-between rounded-lg bg-white shadow-light-box-shadow transition-[background-color,box-shadow,transform] duration-300 ease-in-out dark:bg-dark-blue-500 dark:shadow-dark-box-shadow ${
         isHovered && "-translate-y-2"
       }`}
     >
       <figure className="mb-4">
         <img
-          className="h-[160px] rounded-tl-md rounded-tr-md object-cover"
+          className="h-[160px] rounded-tl-lg rounded-tr-lg object-cover"
           src={country.flags.png}
           alt={country.name.common}
           width={250}
@@ -57,7 +57,7 @@ const CountryCard = ({
       </div>
       <Link
         to={`/country/${country.name.common.replace(/\s+?/g, "-")}`}
-        className="border-slate-[#ccc] mb-2 ml-auto mr-2 block w-fit cursor-pointer rounded-md border px-2 py-1 shadow duration-300 ease-in-out hover:bg-slate-200 active:scale-95 dark:border-[#5555555d] dark:hover:bg-dark-blue-600 md:active:scale-50"
+        className="border-slate-[#ccc] mb-2 ml-auto mr-2 block w-fit cursor-pointer rounded-lg border px-2 py-1 shadow duration-300 ease-in-out hover:bg-slate-200 active:scale-95 dark:border-[#5555555d] dark:hover:bg-dark-blue-600 md:active:scale-50"
         title={`View more details about ${country.name.common}`}
         aria-label={`View more details about ${country.name.common}`}
         onMouseEnter={() => setIsHovered(true)}

@@ -14,7 +14,7 @@ const CountrySkeleton = ({ isDarkMode }: CountrySkeletonProps) => {
       style={{
         padding: "1rem",
         border: "1px solid #ccc",
-        borderRadius: "4px",
+        borderRadius: "8px",
         margin: "1rem auto",
         maxWidth: "250px",
       }}
