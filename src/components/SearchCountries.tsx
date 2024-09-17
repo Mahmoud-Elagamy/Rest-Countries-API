@@ -76,6 +76,7 @@ const SearchCountries = ({
     [isDropdownVisible, setDropdownVisible],
   );
 
+  // Add event listeners to the document
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleEscapePress);
@@ -86,6 +87,7 @@ const SearchCountries = ({
     };
   }, [handleClickOutside, handleEscapePress]);
 
+  // Update the isLoading state based on the length of the filteredCountries array
   useEffect(() => {
     if (searchQuery.length >= 1) {
       setIsLoading(true);
@@ -100,17 +102,9 @@ const SearchCountries = ({
     return () => clearTimeout(timer);
   }, [filteredCountries.length, searchQuery.length]);
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      inputRef.current?.focus();
-    }, 700);
-
-    return () => clearTimeout(timeoutId);
-  }, []);
-
   const dropdownMenu = (
     <motion.menu
-      className="dropdown-menu-w absolute left-0 top-12 z-[1] mx-6 max-h-60 space-y-2 overflow-auto rounded-md border border-gray-300 bg-white/50 py-2 shadow-md backdrop-blur-sm transition-all duration-300 ease-in-out *:p-2 dark:border-gray-600 dark:bg-dark-blue-500/50 md:w-60"
+      className="dropdown-menu-w absolute left-0 top-12 z-[1] mx-6 max-h-60 space-y-2 overflow-auto rounded-md border border-gray-300 bg-white/50 py-2 shadow-md backdrop-blur transition-all duration-300 ease-in-out *:p-2 dark:border-gray-600 dark:bg-dark-blue-500/50 md:w-60"
       ref={menuRef}
       initial="hidden"
       animate={searchQuery ? "visible" : "hidden"}
@@ -139,7 +133,7 @@ const SearchCountries = ({
                     onClick={() => setSearchQuery("")}
                   >
                     <img
-                      className="h-[25px] rounded-md"
+                      className="h-[25px] rounded-sm shadow"
                       src={country.flags.png}
                       alt={country.name.common}
                       loading="lazy"
