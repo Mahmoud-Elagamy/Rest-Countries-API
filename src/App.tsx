@@ -84,7 +84,7 @@ const App = () => {
             path="/"
             element={
               <>
-                <main>
+                <main className="min-h-[1264px]">
                   <section className="flex-center-between container relative mb-10">
                     <h2 className="sr-only">
                       Search for a country and filter by region
