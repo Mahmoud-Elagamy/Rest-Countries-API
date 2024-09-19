@@ -19,7 +19,7 @@ const Header = ({ isDarkMode, setIsDarkMode }: HeaderProps) => {
   return (
     <header className="mb-10 bg-white py-4 shadow-sm transition-[background-color] duration-300 ease-in-out dark:bg-dark-blue-500">
       <div className="flex-center-between container">
-        <Link to="/">
+        <Link to="/" reloadDocument>
           <h1 className="font-extrabold md:text-2xl">Where in the world?</h1>
         </Link>
         <button
