@@ -10,25 +10,19 @@ import CountryDetailsCard from "./CountryDetailsCard";
 import CountryDetailsSkeleton from "./skeletons/CountryDetailsSkeleton";
 
 // Custom Hooks
-import useCountries from "./hooks/useCountries";
+import useCountriesContext from "../hooks/useCountries";
 
 // Types
 import { MotionType } from "../App";
-import { Country } from "./hooks/useCountries";
+import { Country } from "../types/country";
 type CountryDetailsProps = {
-  isLoading: boolean;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
   motion: MotionType;
 };
 
-function CountryDetails({
-  isLoading,
-  setIsLoading,
-  isDarkMode,
-  motion,
-}: CountryDetailsProps) {
-  const { countries, getCountryByName } = useCountries();
+function CountryDetails({ isDarkMode, motion }: CountryDetailsProps) {
+  const { countries, getCountryByName, isLoading, setIsLoading } =
+    useCountriesContext();
 
   const [country, setCountry] = useState<Country | null>(null);
   const [borderCountries, setBorderCountries] = useState<Country[]>([]);
@@ -36,7 +30,7 @@ function CountryDetails({
   const { countryName } = useParams();
   const navigate = useNavigate();
 
-  const fetchBorderCountries = useCallback(
+  const getBorderCountries = useCallback(
     async (borders: string[]) => {
       if (!borders?.length) return [];
       const borderData = borders
@@ -82,7 +76,7 @@ function CountryDetails({
       if (selectedCountry) {
         setCountry(selectedCountry);
 
-        const borderData = await fetchBorderCountries(
+        const borderData = await getBorderCountries(
           selectedCountry.borders || [],
         );
         setBorderCountries(borderData);
@@ -92,7 +86,7 @@ function CountryDetails({
     };
 
     loadCountryData();
-  }, [countryName, getCountryByName, fetchBorderCountries, setIsLoading]);
+  }, [countryName, getCountryByName, getBorderCountries, setIsLoading]);
 
   useEffect(() => {
     if (country) {

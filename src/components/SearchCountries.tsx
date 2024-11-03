@@ -1,26 +1,10 @@
-import { FormEvent, useEffect, useRef, useState, useCallback } from "react";
-
-// Lucide Library
+import { FormEvent, useEffect, useRef, useCallback, useState } from "react";
+import { Link } from "react-router-dom";
 import { Search, TriangleAlert } from "lucide-react";
 
-import { Link } from "react-router-dom";
-
-// Custom Components
+import useCountriesContext from "../hooks/useCountries";
 import ThreeDotSpinner from "./LoadingSpinner";
-
-// Types
 import { MotionType } from "../App";
-import { Country } from "./hooks/useCountries";
-
-// Types
-type SearchCountriesProps = {
-  searchQuery: string;
-  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-  isDropdownVisible: boolean;
-  filteredCountries: Country[];
-  motion: MotionType;
-  setDropdownVisible: React.Dispatch<React.SetStateAction<boolean>>;
-};
 
 const dropdownVariants = {
   hidden: { opacity: 0 },
@@ -32,15 +16,16 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-const SearchCountries = ({
-  searchQuery,
-  setSearchQuery,
-  isDropdownVisible,
-  setDropdownVisible,
-  filteredCountries,
-  motion,
-}: SearchCountriesProps) => {
-  const [isLoading, setIsLoading] = useState(true);
+const SearchCountries = ({ motion }: { motion: MotionType }) => {
+  const {
+    searchQuery,
+    setSearchQuery,
+    isDropdownVisible,
+    setIsDropdownVisible,
+    filteredCountries,
+  } = useCountriesContext();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -57,23 +42,23 @@ const SearchCountries = ({
         menuRef.current &&
         !menuRef.current.contains(event.target as Node)
       ) {
-        setDropdownVisible(false);
+        setIsDropdownVisible(false);
       }
     },
-    [isDropdownVisible, setDropdownVisible],
+    [isDropdownVisible, setIsDropdownVisible],
   );
 
   // Close the dropdown and remove focus from the input when pressing the Escape key.
   const handleEscapePress = useCallback(
     (event: KeyboardEvent) => {
       if (isDropdownVisible && event.key === "Escape") {
-        setDropdownVisible(false);
+        setIsDropdownVisible(false);
         if (inputRef.current) {
           inputRef.current.blur();
         }
       }
     },
-    [isDropdownVisible, setDropdownVisible],
+    [isDropdownVisible, setIsDropdownVisible],
   );
 
   // Add event listeners to the document
@@ -100,7 +85,7 @@ const SearchCountries = ({
     }, 800);
 
     return () => clearTimeout(timer);
-  }, [filteredCountries.length, searchQuery.length]);
+  }, [filteredCountries.length, searchQuery.length, setIsLoading]);
 
   const dropdownMenu = (
     <motion.menu
@@ -181,7 +166,7 @@ const SearchCountries = ({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => {
-            if (searchQuery) setDropdownVisible(true); // Show dropdown when input is focused and there is a search query
+            if (searchQuery) setIsDropdownVisible(true); // Show dropdown when input is focused and there is a search query
           }}
         />
         <button type="submit" title="submit" disabled>

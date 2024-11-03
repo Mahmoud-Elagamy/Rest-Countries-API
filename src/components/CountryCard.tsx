@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 // Types
 import { MotionType } from "../App";
-import { Country } from "./hooks/useCountries";
+import { Country } from "../types/country";
 
 const CountryCard = ({
   country,

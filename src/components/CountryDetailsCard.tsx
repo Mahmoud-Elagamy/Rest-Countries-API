@@ -2,7 +2,7 @@
 import { MapPin } from "lucide-react";
 
 // Types
-import { Country } from "./hooks/useCountries";
+import { Country } from "../types/country";
 type CountryDetailsCardProps = {
   country: Country;
   countryLanguages: string;

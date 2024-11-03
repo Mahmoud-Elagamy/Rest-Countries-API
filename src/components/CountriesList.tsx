@@ -2,31 +2,31 @@
 import CountryCard from "./CountryCard";
 import CountrySkeleton from "./skeletons/CountrySkeleton";
 
+import { COUNTRIES_PER_PAGE } from "../utils/constants";
+import useCountriesContext from "../hooks/useCountries";
+
 // Types
-import { Country } from "./hooks/useCountries";
+import { Country } from "../types/country";
 import { MotionType } from "../App";
 type CountriesListProps = {
   isDarkMode: boolean;
   displayedCountries: Country[];
-  isLoading: boolean;
   motion: MotionType;
   currentPage: number;
-  pageSize: number;
 };
 
 const CountriesList = ({
   isDarkMode,
   displayedCountries,
-  isLoading,
   motion,
   currentPage,
-  pageSize,
 }: CountriesListProps) => {
-  const startIndex = (currentPage - 1) * pageSize;
+  const { isLoading } = useCountriesContext();
+  const startIndex = (currentPage - 1) * COUNTRIES_PER_PAGE;
 
   const slicedCountries = displayedCountries.slice(
     startIndex,
-    startIndex + pageSize,
+    startIndex + COUNTRIES_PER_PAGE,
   );
 
   if (isLoading) {
@@ -46,7 +46,7 @@ const CountriesList = ({
       } place-content-center gap-12 md:grid-cols-alt-grid md:gap-[77px] xl:grid-cols-main-grid`}
     >
       <h2 className="sr-only">Countries</h2>
-      {displayedCountries?.length &&
+      {!!displayedCountries?.length &&
         slicedCountries.map((country, index) => (
           <CountryCard key={index} country={country} motion={motion} />
         ))}

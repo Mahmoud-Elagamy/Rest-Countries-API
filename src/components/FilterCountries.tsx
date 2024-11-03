@@ -1,28 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-
-// Lucide Library
 import { ChevronDown } from "lucide-react";
 
-// Types
-type FilterCountriesProps = {
-  currentRegion: string;
-  setCurrentRegion: React.Dispatch<React.SetStateAction<string>>;
-  handleRegionChange: (region: string) => void;
-};
+import useCountriesContext from "../hooks/useCountries";
+import { REGIONS } from "../utils/constants";
 
-const FilterCountries = ({
-  currentRegion,
-  setCurrentRegion,
-  handleRegionChange,
-}: FilterCountriesProps) => {
-  const regions = [
-    "All Regions",
-    "Africa",
-    "Americas",
-    "Asia",
-    "Europe",
-    "Oceania",
-  ];
+const FilterCountries = () => {
+  const { currentRegion, setCurrentRegion } = useCountriesContext();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -33,6 +16,10 @@ const FilterCountries = ({
   ) => {
     event.stopPropagation();
     setIsMenuOpen((prevState) => !prevState);
+  };
+
+  const handleRegionChange = (region: string) => {
+    setCurrentRegion(region);
   };
 
   useEffect(() => {
@@ -82,7 +69,7 @@ const FilterCountries = ({
         }`}
         ref={menuRef}
       >
-        {regions.map((region) => (
+        {REGIONS.map((region) => (
           <li
             key={region}
             className={`mx-1 rounded-md ${

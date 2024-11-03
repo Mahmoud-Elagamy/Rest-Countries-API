@@ -1,6 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import { useState, useLayoutEffect, useEffect, useMemo } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { motion } from "framer-motion";
 
 // Custom Components
 import Header from "./components/Header";
@@ -12,31 +12,17 @@ import CountryDetails from "./components/CountryDetails";
 import ErrorPage from "./components/ErrorPage";
 
 // Custom Hooks
-import useCountries from "./components/hooks/useCountries";
-
-import { motion } from "framer-motion";
+import useCountriesContext from "./hooks/useCountries";
 
 // Utils
 import applyTheme from "./utils/applyTheme";
+import { COUNTRIES_PER_PAGE } from "./utils/constants";
 
 // Types
 export type MotionType = typeof motion;
 
-const CountriesPerPage = window.innerWidth > 767 ? 12 : 6;
-
 const App = () => {
-  const {
-    countries,
-    filteredCountries,
-    currentRegion,
-    setCurrentRegion,
-    searchQuery,
-    setSearchQuery,
-    isLoading,
-    setIsLoading,
-    isDropdownVisible,
-    setDropdownVisible,
-  } = useCountries();
+  const { countries, currentRegion } = useCountriesContext();
 
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,13 +45,9 @@ const App = () => {
   );
 
   const totalPages = useMemo(
-    () => Math.ceil(displayedCountries.length / CountriesPerPage),
+    () => Math.ceil(displayedCountries.length / COUNTRIES_PER_PAGE),
     [displayedCountries.length],
   );
-
-  const handleRegionChange = (region: string) => {
-    setCurrentRegion(region);
-  };
 
   useLayoutEffect(() => {
     applyTheme(setIsDarkMode);
@@ -89,28 +71,15 @@ const App = () => {
                     <h2 className="sr-only">
                       Search for a country and filter by region
                     </h2>
-                    <SearchCountries
-                      setSearchQuery={setSearchQuery}
-                      searchQuery={searchQuery}
-                      isDropdownVisible={isDropdownVisible}
-                      setDropdownVisible={setDropdownVisible}
-                      filteredCountries={filteredCountries}
-                      motion={motion}
-                    />
-                    <FilterCountries
-                      currentRegion={currentRegion}
-                      setCurrentRegion={setCurrentRegion}
-                      handleRegionChange={handleRegionChange}
-                    />
+                    <SearchCountries motion={motion} />
+                    <FilterCountries />
                   </section>
 
                   <CountriesList
                     isDarkMode={isDarkMode}
                     displayedCountries={displayedCountries}
-                    isLoading={isLoading}
                     motion={motion}
                     currentPage={currentPage}
-                    pageSize={CountriesPerPage}
                   />
                 </main>
                 <footer className="pb-3 pt-10">
@@ -128,14 +97,7 @@ const App = () => {
           ></Route>
           <Route
             path="/country/:countryName"
-            element={
-              <CountryDetails
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-                isDarkMode={isDarkMode}
-                motion={motion}
-              />
-            }
+            element={<CountryDetails isDarkMode={isDarkMode} motion={motion} />}
           />
           <Route path="*" element={<ErrorPage motion={motion} />} />
         </Routes>

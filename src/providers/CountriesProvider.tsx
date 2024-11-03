@@ -1,49 +1,27 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
-import debounce from "../../utils/debounce";
+import {
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+  createContext,
+} from "react";
+import debounce from "../utils/debounce";
+import { Country } from "../types/country";
+import CountriesContextType from "../types/countries-context";
 
-// Types
-export type Country = {
-  name: {
-    common: string;
-    official?: string;
-  };
+const CountriesContext = createContext<CountriesContextType | null>(null);
 
-  flags: {
-    png: string;
-  };
-
-  population: number;
-  region: string;
-  capital?: string;
-  subregion?: string;
-
-  maps?: {
-    googleMaps: string;
-    openStreetMaps: string;
-  };
-
-  currencies?: {
-    [key: string]: {
-      name: string;
-      symbol: string;
-    };
-  };
-
-  languages?: {
-    [key: string]: string;
-  };
-
-  borders?: [];
-  cca3?: string;
-  area?: number;
-};
-const useCountries = () => {
+export const CountriesProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [countries, setCountries] = useState<Country[]>([]);
   const [filteredCountries, setFilteredCountries] = useState<Country[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentRegion, setCurrentRegion] = useState("All Regions");
   const [isLoading, setIsLoading] = useState(true);
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,9 +65,9 @@ const useCountries = () => {
         country.name.common.toLowerCase().startsWith(searchQuery.toLowerCase()),
       );
 
-      setDropdownVisible(true);
+      setIsDropdownVisible(true);
     } else {
-      setDropdownVisible(false);
+      setIsDropdownVisible(false);
     }
 
     setFilteredCountries(filtered);
@@ -118,18 +96,38 @@ const useCountries = () => {
     };
   }, [currentRegion, searchQuery, debouncedFilter]);
 
-  return {
-    countries,
-    filteredCountries,
-    searchQuery,
-    setSearchQuery,
-    currentRegion,
-    setCurrentRegion,
-    isLoading,
-    setIsLoading,
-    isDropdownVisible,
-    setDropdownVisible,
-    getCountryByName,
-  };
+  const contextValues = useMemo(
+    () => ({
+      countries,
+      filteredCountries,
+      searchQuery,
+      setSearchQuery,
+      currentRegion,
+      setCurrentRegion,
+      isLoading,
+      setIsLoading,
+      isDropdownVisible,
+      setIsDropdownVisible,
+      getCountryByName,
+    }),
+    [
+      countries,
+      filteredCountries,
+      searchQuery,
+      currentRegion,
+      isLoading,
+      setIsLoading,
+      isDropdownVisible,
+      setIsDropdownVisible,
+      getCountryByName,
+    ],
+  );
+
+  return (
+    <CountriesContext.Provider value={contextValues}>
+      {children}
+    </CountriesContext.Provider>
+  );
 };
-export default useCountries;
+
+export default CountriesContext;
